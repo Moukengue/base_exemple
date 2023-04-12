@@ -62,14 +62,7 @@ WHERE  SUBSTR(nom,3 ,1) = 'u';
 /*18.Afficher le salaire et le nom des employés du service 41 classés par
 salaire croissant.*/
 SELECT salaire,nom,nodep FROM employe
-WHERE nodep = 41 ORDER BY salaire ASC ;
-/*19.Afficher le salaire et le nom des employés du service 41 classés par
-salaire décroissant.*/
-SELECT salaire,nom,nodep FROM employe
-WHERE nodep = 41 ORDER BY salaire DESC;
-/*20.Afficher le titre, le salaire et le nom des employés classés par titre
-croissant et par salaire décroissant.*/
-SELECT titre,salaire,nom FROM employe
+WHERE nodep = 41 ORDER BY salaire ASC ;Changer le nom du départe
 ORDER BY titre ASC,salaire DESC ;
 /*21.Afficher le taux de commission, le salaire et le nom des employés
 classés par taux de commission croissante.*/
@@ -128,3 +121,50 @@ GROUP BY titre;
 /*2. Calculer la moyenne des salaires et leur somme, par région*/
 SELECT AVG(salaire),nodep FROM employe 
 GROUP BY nodep;
+/*3. Afficher les numéros des départements ayant au moins 3 employés*/
+SELECT nodep FROM employe 
+GROUP BY nodep
+HAVING COUNT(nodep)<3
+/*4. Afficher les lettres qui sont l'initiale d'au moins trois employés.*/
+SELECT SUBSTR(nom,1,1),COUNT(nom) FROM employe
+GROUP BY SUBSTR(nom,1,1)
+HAVING COUNT(nom)>=3;
+/*5. Rechercher le salaire maximum et le salaire minimum parmi tous les
+salariés et l'écart entre les deux.*/
+SELECT MAX(salaire), MIN(salaire),MAX(salaire)-MIN(salaire) FROM employe;
+/*6. Rechercher le nombre de titres différents.*/
+SELECT COUNT(distinct titre) FROM employe;Changer le nom du départe
+SELECT titre,AVG(salaire) FROM employe
+GROUP BY titre
+HAVING  AVG(salaire) > (SELECT AVG(salaire) FROM employe WHERE titre LIKE  'représentant');
+/* Rechercher le nombre de salaires renseignés et le nombre de taux de
+commission renseignés.
+SELECT COUNT(salaire), COUNT(tauxcom) FROM employe;
+
+
+/*Manipuler une base de données*/
+/*Insert */
+INSERT INTO employe(noemp,nom,prenom,dateemb,nosup,titre,nodep,salaire,tauxcom)
+VALUES ('26','Macosso','Ervine','2019-06-13 00:00:00','4','Développeur web','50',1800,NULL)
+       ('28','Moukengue','Aline','2019-06-13 00:00:00','5','Data Sciencientist','50',1800,NULL);
+       ('29','Moukengue','Claraline','2020-08-13 00:00:00','5','Développeur Full stackt','50',1800,NULL);
+
+       /*Ajouter un département*/
+       INSERT INTO dept (nodept,nom,noregion)
+        VALUES('80','La Somme','6')
+              ('70','Pas-de-calais','7')
+              ('60','Oise','8');
+
+       /*Update*/
+       /*Augmenter de 10% le salaire de l'employe 17*/
+UPDATE employe
+SET salaire = salaire*0,1
+WHERE noemp = 17;
+/*Changer le nom du département 45 en 'Logistique'*/
+UPDATE dept
+SET nom = 'logistique'
+WHERE nodept = 45
+/*delete*/
+/*Supprimer le dernier des employés que vous avez insérés précédemment.*/
+DELETE 
+FROM employe WHERE noemp = 28;
