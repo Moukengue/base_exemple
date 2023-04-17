@@ -114,7 +114,22 @@ SELECT nom, LENGTH(nom) AS nom_length FROM employe;
 
 
 
-/*exo2
+/*exo2*/
+
+/*Rechercher le prénom des employés et le numéro de la région de leur
+département.*/
+SELECT prenom,noregion FROM employe
+INNER JOIN dept ON nodep = nodept;
+
+/*Rechercher le numéro du département, le nom du département, le
+nom des employés classés par numéro de département (renommer les
+tables utilisées)*/
+SELECT nodep,dept.nom,employe.nom FROM employe
+INNER JOIN dept 
+ON nodep = nodept;
+
+
+
 1. Calculer le nombre d'employés de chaque titre*/
 SELECT COUNT(noemp),titre FROM employe 
 GROUP BY titre;
@@ -137,8 +152,8 @@ SELECT COUNT(distinct titre) FROM employe;Changer le nom du départe
 SELECT titre,AVG(salaire) FROM employe
 GROUP BY titre
 HAVING  AVG(salaire) > (SELECT AVG(salaire) FROM employe WHERE titre LIKE  'représentant');
-/* Rechercher le nombre de salaires renseignés et le nombre de taux de
-commission renseignés.
+/*9. Rechercher le nombre de salaires renseignés et le nombre de taux de
+commission renseignés.*/
 SELECT COUNT(salaire), COUNT(tauxcom) FROM employe;
 
 
@@ -158,12 +173,12 @@ VALUES ('26','Macosso','Ervine','2019-06-13 00:00:00','4','Développeur web','50
        /*Update*/
        /*Augmenter de 10% le salaire de l'employe 17*/
 UPDATE employe
-SET salaire = salaire*0,1
+SET salaire = salaire*1.1
 WHERE noemp = 17;
 /*Changer le nom du département 45 en 'Logistique'*/
 UPDATE dept
 SET nom = 'logistique'
-WHERE nodept = 45
+WHERE nodept = 45;
 /*delete*/
 /*Supprimer le dernier des employés que vous avez insérés précédemment.*/
 DELETE 
